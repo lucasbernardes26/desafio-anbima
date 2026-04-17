@@ -12,6 +12,7 @@ import java.util.Optional;
 @Entity
 @Table(name="pedidos")
 @Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Pedido {
@@ -39,7 +40,7 @@ public class Pedido {
 
     @Enumerated(EnumType.STRING)
     @Column(length = 20)
-    private Status status;
+    private Status status = Status.RECEBIDO;
 
     @CreationTimestamp
     @Column(name = "criado_em")
@@ -54,7 +55,6 @@ public class Pedido {
         this.quantidade = quantidade;
         this.bebida = bebida;
         this.valor = valor;
-        this.status = Status.RECEBIDO;
     }
 
     public Pedido(Optional<Pedido> p){
@@ -68,6 +68,11 @@ public class Pedido {
             this.status = p.get().getStatus();
             this.criadoEm = p.get().getCriadoEm();
 
+    }
+
+    public Status setStatus(String status){
+        Status newStatus = Status.valueOf(status.toUpperCase());
+        return newStatus;
     }
 
 

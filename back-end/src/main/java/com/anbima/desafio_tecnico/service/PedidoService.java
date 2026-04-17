@@ -23,21 +23,20 @@ public class PedidoService {
         return pedidos;
     }
 
-    public void salvarPedido (Pedido p){
+    public Pedido salvarPedido (Pedido p){
         try {
             repository.save(p);
-            log.info("Pedido salvo no banco com sucesso!");
+            log.info("Pedido salvo no banco!");
+            return p;
         } catch (Exception e){
             log.error("Erro: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
 
     }
 
     public Pedido encontrarPedidoPorId(Long id){
         return repository.findById(id).orElse(null);
-              //  .map(p -> new Pedido(p.getId(), p.getTipoLanche(), p.getProteina(),
-               //         p.getAcompanhamento(), p.getQuantidade(), p.getBebida(), p.getValor(), p.getStatus(), p.getCriadoEm()))
-               // ;
     }
 
     public List<Pedido> encontrarPedidosPorStatus(String status){
@@ -48,12 +47,10 @@ public class PedidoService {
             List<Pedido> pedidos = repository.findAllByStatus(statusEnun);
             return pedidos;
 
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
+            log.error("Erro: " + e.getMessage());
             throw new RuntimeException(e.getMessage());
 
-        } catch (Exception e){
-            log.error("Erro: {}", e.getMessage());
-            return null;
         }
     }
 
@@ -64,15 +61,14 @@ public class PedidoService {
             Status novoStatus = Status.valueOf(status.toUpperCase());
 
             if (p.isPresent()){
-                System.out.println();
                 repository.atualizarStatusDoPedido(novoStatus, id);
+              log.info("Pedido atualizado!");
             } else {
-                // implementar resposta json caso o pedido não seja encontrado
-                System.out.println("Pedido não encontrado, não foi possível atualizar o status");
+                log.info("Nenhum pedido encontrado.");
             }
         } catch(Exception e){
-            // retornar resposta json na versão web
-            System.out.println("Erro: " + e.getMessage());
+
+            log.error("Erro: " + e.getMessage());
         }
 
 
