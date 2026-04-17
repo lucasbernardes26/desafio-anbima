@@ -16,10 +16,9 @@ public class PedidoService {
 
     @Autowired
     private PedidoRepository repository;
-    private List<Pedido> pedidos;
 
     public List<Pedido> listarPedidos(){
-        pedidos = repository.findAllByOrderByIdAsc();
+        List<Pedido> pedidos = repository.findAllByOrderByIdAsc();
 
         return pedidos;
     }
@@ -27,20 +26,17 @@ public class PedidoService {
     public Pedido salvarPedido (Pedido p){
         try {
             repository.save(p);
-            System.out.println("Pedido salvo no banco!");
+            log.info("Pedido salvo no banco!");
             return p;
         } catch (Exception e){
-            System.out.println("ERRO: " + e.getMessage());
-            throw new RuntimeException(e.getMessage());
+            log.error("Erro: {}", e.getMessage());
+            throw new RuntimeException(e);
         }
 
     }
 
     public Pedido encontrarPedidoPorId(Long id){
-        return repository.findById(id)
-                .map(p -> new Pedido(p.getId(), p.getTipoLanche(), p.getProteina(),
-                        p.getAcompanhamento(), p.getQuantidade(), p.getBebida(), p.getValor(), p.getStatus(), p.getCriadoEm()))
-                .orElse(null);
+        return repository.findById(id).orElse(null);
     }
 
     public List<Pedido> encontrarPedidosPorStatus(String status){
@@ -48,7 +44,7 @@ public class PedidoService {
         Status statusEnun = Status.valueOf(status);
 
         try{
-            pedidos = repository.findAllByStatus(statusEnun);
+            List<Pedido> pedidos = repository.findAllByStatus(statusEnun);
             return pedidos;
 
         } catch (Exception e) {
@@ -65,11 +61,10 @@ public class PedidoService {
             Status novoStatus = Status.valueOf(status.toUpperCase());
 
             if (p.isPresent()){
-
                 repository.atualizarStatusDoPedido(novoStatus, id);
+              log.info("Pedido atualizado!");
             } else {
-                // implementar resposta json caso o pedido não seja encontrado
-                System.out.println("Pedido não encontrado, não foi possível atualizar o status");
+                log.info("Nenhum pedido encontrado.");
             }
         } catch(Exception e){
 
