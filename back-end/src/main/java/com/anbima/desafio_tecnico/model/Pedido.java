@@ -1,14 +1,19 @@
 package com.anbima.desafio_tecnico.model;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 @Table(name="pedidos")
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Pedido {
 
     @Id
@@ -40,7 +45,7 @@ public class Pedido {
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
-    public Pedido(){}
+
 
     public Pedido(String tipoLanche, String proteina, String acompanhamento, Integer quantidade, String bebida, BigDecimal valor) {
         this.tipoLanche = tipoLanche;
@@ -52,43 +57,32 @@ public class Pedido {
         this.status = Status.RECEBIDO;
     }
 
-    public Long getId() {
-        return id;
+    public Pedido(Optional<Pedido> p){
+            this.id = p.get().getId();
+            this.tipoLanche = p.get().getTipoLanche();
+            this.proteina = p.get().getProteina();
+            this.acompanhamento = p.get().getAcompanhamento();
+            this.quantidade = p.get().getQuantidade();
+            this.bebida = p.get().getBebida();
+            this.valor = p.get().getValor();
+            this.status = p.get().getStatus();
+            this.criadoEm = p.get().getCriadoEm();
+
     }
 
-    public String getTipoLanche() {
-        return tipoLanche;
-    }
 
-    public String getProteina() {
-        return proteina;
-    }
-
-    public String getAcompanhamento() {
-        return acompanhamento;
-    }
-
-    public Integer getQuantidade() {
-        return quantidade;
-    }
-
-    public String getBebida() {
-        return bebida;
-    }
-
-    public BigDecimal getValor() {
-        return valor;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public LocalDateTime getCriadoEm() {
-        return criadoEm;
+    @Override
+    public String toString() {
+        return "Pedido{" +
+                "id=" + id +
+                ", tipoLanche='" + tipoLanche + '\'' +
+                ", proteina='" + proteina + '\'' +
+                ", acompanhamento='" + acompanhamento + '\'' +
+                ", quantidade=" + quantidade +
+                ", bebida='" + bebida + '\'' +
+                ", valor=" + valor +
+                ", status=" + status +
+                ", criadoEm=" + criadoEm +
+                "}\n";
     }
 }
