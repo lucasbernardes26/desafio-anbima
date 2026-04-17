@@ -57,18 +57,22 @@ public class PedidoController {
         }
 
     }
-//rota de teste, substituir pela rota que recebe a string posicional
-    @PostMapping
-    public ResponseEntity<Pedido> salvarPedido(@RequestBody Pedido p){
-        try{
-            Pedido pedidoSalvo = pedidoService.salvarPedido(p);
-            log.info("Pedido salvo no banco com sucesso! ID: {}", pedidoSalvo.getId());
+
+    @PostMapping(value = "/posicional", consumes = "text/plain")
+    public ResponseEntity<Pedido> criarPorPosicional(@RequestBody String linhaPosicional) {
+
+        try {
+            Pedido pedidoSalvo = pedidoService.processarStringPosicional(linhaPosicional);
             return ResponseEntity.status(201).body(pedidoSalvo);
+
+        } catch (IllegalArgumentException e) {
+            log.error("Erro de validação posicional: {}", e.getMessage());
+
+            return ResponseEntity.badRequest().build();
         } catch (Exception e) {
-            log.error("ERRO ao salvar o pedido: {}", e.getMessage());
+            log.error("Erro interno ao processar posicional: {}", e.getMessage());
             return ResponseEntity.status(500).build();
         }
-
     }
 
 
