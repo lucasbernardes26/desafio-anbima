@@ -3,22 +3,22 @@ package com.anbima.desafio_tecnico.service;
 import com.anbima.desafio_tecnico.model.Pedido;
 import com.anbima.desafio_tecnico.model.Status;
 import com.anbima.desafio_tecnico.repository.PedidoRepository;
-import org.hibernate.stat.internal.StatsHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PedidoService {
 
     @Autowired
     private PedidoRepository repository;
-    private List<Pedido> pedidos;
 
     public List<Pedido> listarPedidos(){
-        pedidos = repository.findAllByOrderByIdAsc();
+        List<Pedido> pedidos = repository.findAllByOrderByIdAsc();
 
         return pedidos;
     }
@@ -26,33 +26,34 @@ public class PedidoService {
     public void salvarPedido (Pedido p){
         try {
             repository.save(p);
-            System.out.println("Pedido salvo no banco!");
+            log.info("Pedido salvo no banco com sucesso!");
         } catch (Exception e){
-            System.out.println("ERRO: " + e.getMessage());
+            log.error("Erro: {}", e.getMessage());
         }
 
     }
 
     public Pedido encontrarPedidoPorId(Long id){
-        return repository.findById(id)
-                .map(p -> new Pedido(p.getId(), p.getTipoLanche(), p.getProteina(),
-                        p.getAcompanhamento(), p.getQuantidade(), p.getBebida(), p.getValor(), p.getStatus(), p.getCriadoEm()))
-                .orElse(null);
+        return repository.findById(id).orElse(null);
+              //  .map(p -> new Pedido(p.getId(), p.getTipoLanche(), p.getProteina(),
+               //         p.getAcompanhamento(), p.getQuantidade(), p.getBebida(), p.getValor(), p.getStatus(), p.getCriadoEm()))
+               // ;
     }
 
     public List<Pedido> encontrarPedidosPorStatus(String status){
         status = status.toUpperCase();
-
         Status statusEnun = Status.valueOf(status);
-        System.out.println(statusEnun);
 
         try{
-            pedidos = repository.findAllByStatus(statusEnun);
+            List<Pedido> pedidos = repository.findAllByStatus(statusEnun);
             return pedidos;
 
-        } catch (Exception e) {
+        } catch (RuntimeException e) {
             throw new RuntimeException(e.getMessage());
 
+        } catch (Exception e){
+            log.error("Erro: {}", e.getMessage());
+            return null;
         }
     }
 
