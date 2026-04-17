@@ -42,14 +42,14 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(String tipoLanche, String proteina, String acompanhamento, Integer quantidade, String bebida, BigDecimal valor, String status) {
+    public Pedido(String tipoLanche, String proteina, String acompanhamento, Integer quantidade, String bebida, BigDecimal valor) {
         this.tipoLanche = tipoLanche;
         this.proteina = proteina;
         this.acompanhamento = acompanhamento;
         this.quantidade = quantidade;
         this.bebida = bebida;
         this.valor = valor;
-        this.status = Status.valueOf(status.toUpperCase());
+        this.status = Status.RECEBIDO;
     }
 
     public Long getId() {
@@ -82,6 +82,10 @@ public class Pedido {
 
     public Status getStatus() {
         return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public LocalDateTime getCriadoEm() {
