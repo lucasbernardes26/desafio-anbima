@@ -3,13 +3,14 @@ package com.anbima.desafio_tecnico.service;
 import com.anbima.desafio_tecnico.model.Pedido;
 import com.anbima.desafio_tecnico.model.Status;
 import com.anbima.desafio_tecnico.repository.PedidoRepository;
-import org.hibernate.stat.internal.StatsHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PedidoService {
 
@@ -23,12 +24,14 @@ public class PedidoService {
         return pedidos;
     }
 
-    public void salvarPedido (Pedido p){
+    public Pedido salvarPedido (Pedido p){
         try {
             repository.save(p);
             System.out.println("Pedido salvo no banco!");
+            return p;
         } catch (Exception e){
             System.out.println("ERRO: " + e.getMessage());
+            throw new RuntimeException(e.getMessage());
         }
 
     }
@@ -42,15 +45,14 @@ public class PedidoService {
 
     public List<Pedido> encontrarPedidosPorStatus(String status){
         status = status.toUpperCase();
-
         Status statusEnun = Status.valueOf(status);
-        System.out.println(statusEnun);
 
         try{
             pedidos = repository.findAllByStatus(statusEnun);
             return pedidos;
 
         } catch (Exception e) {
+            log.error("Erro: " + e.getMessage());
             throw new RuntimeException(e.getMessage());
 
         }
@@ -63,15 +65,15 @@ public class PedidoService {
             Status novoStatus = Status.valueOf(status.toUpperCase());
 
             if (p.isPresent()){
-                System.out.println();
+
                 repository.atualizarStatusDoPedido(novoStatus, id);
             } else {
                 // implementar resposta json caso o pedido não seja encontrado
                 System.out.println("Pedido não encontrado, não foi possível atualizar o status");
             }
         } catch(Exception e){
-            // retornar resposta json na versão web
-            System.out.println("Erro: " + e.getMessage());
+
+            log.error("Erro: " + e.getMessage());
         }
 
 
