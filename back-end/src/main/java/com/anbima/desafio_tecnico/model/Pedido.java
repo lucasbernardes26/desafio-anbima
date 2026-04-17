@@ -48,13 +48,12 @@ public class Pedido {
 
 
 
-    public Pedido(String tipoLanche, String proteina, String acompanhamento, Integer quantidade, String bebida, BigDecimal valor) {
+    public Pedido(String tipoLanche, String proteina, String acompanhamento, Integer quantidade, String bebida) {
         this.tipoLanche = tipoLanche;
         this.proteina = proteina;
         this.acompanhamento = acompanhamento;
         this.quantidade = quantidade;
         this.bebida = bebida;
-        this.valor = valor;
     }
 
     public Pedido(Optional<Pedido> p){
@@ -74,7 +73,6 @@ public class Pedido {
         Status newStatus = Status.valueOf(status.toUpperCase());
         return newStatus;
     }
-
 
     @Override
     public String toString() {
