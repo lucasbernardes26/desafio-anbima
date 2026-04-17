@@ -52,12 +52,10 @@ public class PedidoService {
             pedidos = repository.findAllByStatus(statusEnun);
             return pedidos;
 
-        } catch (RuntimeException e) {
+        } catch (Exception e) {
+            log.error("Erro: " + e.getMessage());
             throw new RuntimeException(e.getMessage());
 
-        } catch (Exception e){
-            log.error("Erro: {}", e.getMessage());
-            return null;
         }
     }
 
@@ -69,6 +67,7 @@ public class PedidoService {
 
             if (p.isPresent()){
                 repository.atualizarStatusDoPedido(novoStatus, id);
+              log.info("Pedido atualizado!");
             } else {
                 log.info("Não existe nenhum pedido com esse ID");
             }
