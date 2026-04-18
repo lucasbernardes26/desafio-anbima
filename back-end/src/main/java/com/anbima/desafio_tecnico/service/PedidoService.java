@@ -4,6 +4,7 @@ import com.anbima.desafio_tecnico.model.Pedido;
 import com.anbima.desafio_tecnico.model.Status;
 import com.anbima.desafio_tecnico.repository.PedidoRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,9 @@ public class PedidoService {
 
     @Autowired
     private CalcularValorTotalService calcularValorTotalService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     public List<Pedido> listarPedidos(){
         return repository.findAllByOrderByIdAsc();
@@ -67,7 +71,7 @@ public class PedidoService {
 
             if (p.isPresent()){
                 repository.atualizarStatusDoPedido(novoStatus, id);
-              log.info("Pedido atualizado!");
+                log.info("Pedido atualizado!");
             } else {
                 log.info("Não existe nenhum pedido com esse ID");
             }
@@ -105,6 +109,11 @@ public class PedidoService {
         valorCalculado = calcularValorTotalService.calcularValorTotal(novoPedido);
         novoPedido.setValor(valorCalculado);
 
-        return salvarPedido(novoPedido);
+        repository.save(novoPedido);
+
+        String mensagemJson = String.format("{\"pedidoId\": %d}", novoPedido.getId());
+        rabbitTemplate.convertAndSend("pedidos.recebidos",mensagemJson);
+
+        return novoPedido;
     }
 }
