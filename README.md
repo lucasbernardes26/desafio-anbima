@@ -6,7 +6,7 @@
 ![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Backend_Concluído-success?style=for-the-badge)
 
-Este projeto é uma API  desenvolvida em **Spring Boot** para a receção, processamento e gestão de pedidos de uma lanchonete. O sistema é capaz de interpretar ficheiros de texto em formato de **String Posicional** (layout de tamanho fixo), calcular regras de negócio de preços/descontos e utilizar mensageria (RabbitMQ) para simular o tempo de preparação de forma desacoplada.
+Este projeto é uma API  desenvolvida em **Spring Boot** para a recepção, processamento e gestão de pedidos de uma lanchonete. O sistema é capaz de interpretar ficheiros de texto em formato de **String Posicional** (layout de tamanho fixo), calcular regras de negócio de preços/descontos e utilizar mensageria (RabbitMQ) para simular o tempo de preparação de forma desacoplada.
 
 ---
 
