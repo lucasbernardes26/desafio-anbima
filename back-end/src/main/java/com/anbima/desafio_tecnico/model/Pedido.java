@@ -46,8 +46,6 @@ public class Pedido {
     @Column(name = "criado_em")
     private LocalDateTime criadoEm;
 
-
-
     public Pedido(String tipoLanche, String proteina, String acompanhamento, Integer quantidade, String bebida) {
         this.tipoLanche = tipoLanche;
         this.proteina = proteina;
@@ -56,36 +54,4 @@ public class Pedido {
         this.bebida = bebida;
     }
 
-    public Pedido(Optional<Pedido> p){
-            this.id = p.get().getId();
-            this.tipoLanche = p.get().getTipoLanche();
-            this.proteina = p.get().getProteina();
-            this.acompanhamento = p.get().getAcompanhamento();
-            this.quantidade = p.get().getQuantidade();
-            this.bebida = p.get().getBebida();
-            this.valor = p.get().getValor();
-            this.status = p.get().getStatus();
-            this.criadoEm = p.get().getCriadoEm();
-
-    }
-
-    public Status setStatus(String status){
-        Status newStatus = Status.valueOf(status.toUpperCase());
-        return newStatus;
-    }
-
-    @Override
-    public String toString() {
-        return "Pedido{" +
-                "id=" + id +
-                ", tipoLanche='" + tipoLanche + '\'' +
-                ", proteina='" + proteina + '\'' +
-                ", acompanhamento='" + acompanhamento + '\'' +
-                ", quantidade=" + quantidade +
-                ", bebida='" + bebida + '\'' +
-                ", valor=" + valor +
-                ", status=" + status +
-                ", criadoEm=" + criadoEm +
-                "}\n";
-    }
 }
