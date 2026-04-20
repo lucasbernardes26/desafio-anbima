@@ -1,8 +1,9 @@
-package com.anbima.desafio_tecnico.service;
+package com.anbima.desafio_tecnico.modulo_entrada;
 
-import com.anbima.desafio_tecnico.model.Pedido;
-import com.anbima.desafio_tecnico.model.Status;
-import com.anbima.desafio_tecnico.repository.PedidoRepository;
+import com.anbima.desafio_tecnico.core.model.Pedido;
+import com.anbima.desafio_tecnico.core.model.Status;
+import com.anbima.desafio_tecnico.core.repository.PedidoRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,7 @@ public class PedidoService {
         }
     }
 
+    @Transactional
     public void atualizarPedido(String status, Long id){
 
         try{

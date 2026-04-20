@@ -1,6 +1,6 @@
-package com.anbima.desafio_tecnico.service;
+package com.anbima.desafio_tecnico.modulo_entrada;
 
-import com.anbima.desafio_tecnico.model.Pedido;
+import com.anbima.desafio_tecnico.core.model.Pedido;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;

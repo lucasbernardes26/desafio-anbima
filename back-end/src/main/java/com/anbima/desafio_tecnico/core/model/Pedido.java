@@ -1,4 +1,4 @@
-package com.anbima.desafio_tecnico.model;
+package com.anbima.desafio_tecnico.core.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -7,7 +7,6 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Entity
 @Table(name="pedidos")
