@@ -1,6 +1,6 @@
-package com.anbima.desafio_tecnico.listener;
+package com.anbima.desafio_tecnico.modulo_processor;
 
-import com.anbima.desafio_tecnico.service.PedidoService;
+import com.anbima.desafio_tecnico.modulo_entrada.PedidoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;

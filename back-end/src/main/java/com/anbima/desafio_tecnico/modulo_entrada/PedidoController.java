@@ -1,8 +1,7 @@
-package com.anbima.desafio_tecnico.controller;
+package com.anbima.desafio_tecnico.modulo_entrada;
 
 
-import com.anbima.desafio_tecnico.model.Pedido;
-import com.anbima.desafio_tecnico.service.PedidoService;
+import com.anbima.desafio_tecnico.core.model.Pedido;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
