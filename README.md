@@ -1,4 +1,4 @@
-# Sistema de Gestão de Pedidos (Desafio Técnico - ANBIMA)
+# Sistema de gestão de pedidos (Desafio Técnico - ANBIMA)
 
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?style=for-the-badge&logo=java&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.0+-6DB33F?style=for-the-badge&logo=spring-boot&logoColor=white)
@@ -6,11 +6,11 @@
 ![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=for-the-badge&logo=rabbitmq&logoColor=white)
 ![Status](https://img.shields.io/badge/Status-Backend_Concluído-success?style=for-the-badge)
 
-Este projeto é uma API  desenvolvida em **Spring Boot** para a recepção, processamento e gestão de pedidos de uma lanchonete. O sistema é capaz de interpretar ficheiros de texto em formato de **String Posicional** (layout de tamanho fixo), calcular regras de negócio de preços/descontos e utilizar mensageria (RabbitMQ) para simular o tempo de preparação de forma desacoplada.
+Este projeto é uma API  desenvolvida em **Spring Boot** para a recepção, processamento e gestão de pedidos de uma lanchonete. O sistema é capaz de interpretar arquivos de texto em formato de **String Posicional** (layout de tamanho fixo), calcular regras de negócio de preços/descontos e utilizar mensageria (RabbitMQ) para simular o tempo de preparação de forma desacoplada.
 
 ---
 
-## Tecnologias Utilizadas
+## Tecnologias utilizadas
 
 * **Linguagem:** Java 17
 * **Framework:** Spring Boot (Web, Data JPA, AMQP)
@@ -27,7 +27,7 @@ Este projeto é uma API  desenvolvida em **Spring Boot** para a recepção, proc
 * Docker e Docker Compose (para subir o PostgreSQL e o RabbitMQ)
 
 ---
-## Próximos Passos
+## Próximos passos
 
 * [x] Construção da API REST e modelagem do banco de dados relacional.
 * [x] Processamento da string posicional de tamanho fixo.
